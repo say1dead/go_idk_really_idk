@@ -18,3 +18,8 @@ input {
 button {
 	padding: 8px 12px;
 }
+
+#message {
+	color: red;
+	background-color: blueviolet;
+}

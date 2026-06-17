@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -11,10 +12,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	nameInput := r.FormValue("firstName")
+	surnameInput := r.FormValue("lastName")
 	loginInput := r.FormValue("login")
 	passwordInput := r.FormValue("password")
 
-	err := register(loginInput, passwordInput)
+	err := register(nameInput, surnameInput, loginInput, passwordInput)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -32,9 +35,17 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	loginInput := r.FormValue("login")
 	passwordInput := r.FormValue("password")
+	user, ok := login(loginInput, passwordInput)
 
-	if login(loginInput, passwordInput) {
-		fmt.Fprintln(w, "login succes")
+	if ok {
+		w.Header().Set("Content-Type", "application/json")
+
+		json.NewEncoder(w).Encode(map[string]string{
+			"firstName": user.Name,
+			"lastName":  user.Surname,
+		})
+
+		return
 	} else {
 		http.Error(w, "wrong login or password", http.StatusUnauthorized)
 	}

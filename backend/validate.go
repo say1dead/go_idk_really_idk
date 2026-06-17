@@ -31,3 +31,21 @@ func validatePassword(password string) error {
 	}
 	return nil
 }
+
+func validateName(name string) error {
+	for _, ch := range name {
+		if unicode.IsDigit(ch) {
+			return errors.New("name cant contain numbers")
+		}
+	}
+	return nil
+}
+
+func validateSurname(surname string) error {
+	for _, ch := range surname {
+		if unicode.IsDigit(ch) {
+			return errors.New("surname cant contain numbers")
+		}
+	}
+	return nil
+}

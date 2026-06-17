@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func register(login, password string) error {
+func register(name, surname, login, password string) error {
 	if err := validateLogin(login); err != nil {
 		fmt.Println("incorrect login")
 		return err
@@ -16,7 +16,22 @@ func register(login, password string) error {
 		return err
 	}
 
-	if _, exist := users[login]; exist {
+	if err := validateName(name); err != nil {
+		fmt.Println("incorrect name")
+		return err
+	}
+
+	if err := validateSurname(surname); err != nil {
+		fmt.Println("incorrect surname")
+		return err
+	}
+
+	_, exist, err := getUserByLogin(login)
+	if err != nil {
+		return err
+	}
+
+	if exist {
 		return errors.New("user already is")
 	}
 
@@ -25,14 +40,12 @@ func register(login, password string) error {
 		return err
 	}
 
-	users[login] = User{
+	user := User{
+		Name:     name,
+		Surname:  surname,
 		Login:    login,
 		Password: hash,
 	}
 
-	err = saveUserToFile(users[login])
-	if err != nil {
-		return err
-	}
-	return nil
+	return saveUserToDb(user)
 }

@@ -1,9 +1,18 @@
 package main
 
-func login(login, password string) bool {
-	user, exist := users[login]
-	if !exist {
-		return false
+func login(login, password string) (User, bool) {
+	user, exist, err := getUserByLogin(login)
+	if err != nil {
+		return User{}, false
 	}
-	return checkPassword(password, user.Password)
+
+	if !exist {
+		return User{}, false
+	}
+
+	if !checkPassword(password, user.Password) {
+		return User{}, false
+	}
+
+	return user, true
 }

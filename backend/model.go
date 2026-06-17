@@ -2,7 +2,7 @@ package main
 
 type User struct {
 	Name     string
-	Age      int
+	Surname  string
 	Login    string
 	Password string
 }

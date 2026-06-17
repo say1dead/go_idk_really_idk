@@ -6,26 +6,39 @@
 	<link rel="stylesheet" href="/style.css">
 </head>
 <body>
+	<section id="choice-page">
+		<h2>Привет, ты...</h2>
+		<button onclick="showRegister()">Новенький</button>
+		<button onclick="showLogin()">Уже смешарик</button>
+	</section>
 	<h1>Auth</h1>
 
-	<section>
+	<section id="register-page" style="display: none;">
 		<h2>Регистрация</h2>
 
+		<input id="register-name" placeholder="Имя">
+		<input id="register-surname" placeholder="Фамилия">
 		<input id="register-login" placeholder="Логин">
 		<input id="register-password" type="password" placeholder="Пароль">
 
 		<button onclick="registerUser()">Зарегистрироваться</button>
+		<button onclick="showChoice()">Назад</button>
 	</section>
-
-	<section>
+	<section id="login-page" style="display: none;">
 		<h2>Вход</h2>
 
 		<input id="login-login" placeholder="Логин">
 		<input id="login-password" type="password" placeholder="Пароль">
 
 		<button onclick="loginUser()">Войти</button>
+		<button onclick="showChoice()">Назад</button>
 	</section>
 
+	<section id="account-page" style="display: none;">
+		<h2 id="hello-text"></h2>
+		<button onclick="logout()">Выход</button>
+	</section>
+	
 	<p id="message"></p>
 
 	<script src="/script.js"></script>
