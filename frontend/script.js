@@ -1,0 +1,37 @@
+async function registerUser() {
+	const login = document.getElementById("register-login").value
+	const password = document.getElementById("register-password").value
+
+	const response = await fetch("/register", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		body: new URLSearchParams({
+			login: login,
+			password: password
+		})
+	})
+
+	const text = await response.text()
+	document.getElementById("message").textContent = text
+}
+
+async function loginUser() {
+	const login = document.getElementById("login-login").value
+	const password = document.getElementById("login-password").value
+
+	const response = await fetch("/login", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		body: new URLSearchParams({
+			login: login,
+			password: password
+		})
+	})
+
+	const text = await response.text()
+	document.getElementById("message").textContent = text
+}
